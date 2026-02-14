@@ -39,23 +39,23 @@ class LogisticsData(BaseModel):
 
 def map_input(input_dict):
     return {
-        'Supplier_name': input_dict['Supplier_name'],
-        'Defect_rates': input_dict['Defect_rates'],
-        'Production_volumes': input_dict['Production_volumes'],
-        'Manufacturing_lead_time': input_dict['Manufacturing_lead_time'],
-        'Manufacturing_costs': input_dict['Manufacturing_costs'],
+        'Supplier_name': input_dict['Supplier name'],
+        'Defect_rates': input_dict['Defect rates'],
+        'Production_volumes': input_dict['Production volumes'],
+        'Manufacturing_lead_time': input_dict['Manufacturing lead time'],
+        'Manufacturing_costs': input_dict['Manufacturing costs'],
         'Price': input_dict['Price'],
         'Availability': input_dict['Availability'],
-        'Number_of_products_sold': input_dict['Number_of_products_sold'],
-        'Revenue_generated': input_dict['Revenue_generated'],
-        'Product_type': input_dict['Product_type'],
-        'Customer_demographics': input_dict['Customer_demographics'],
-        'customer_classification': input_dict['customer_classification'],
-        'Transportation_modes': input_dict['Transportation_modes'],
+        'Number_of_products_sold': input_dict['Number of products sold'],
+        'Revenue_generated': input_dict['Revenue generated'],
+        'Product_type': input_dict['Product type'],
+        'Customer_demographics': input_dict['Customer demographics'],
+        'customer_classification': input_dict['customer classification'],
+        'Transportation_modes': input_dict['Transportation modes'],
         'Routes': input_dict['Routes'],
-        'Shipping_carriers': input_dict['Shipping_carriers'],
-        'Shipping_times': input_dict['Shipping_times'],
-        'Order_quantities': input_dict['Order_quantities']
+        'Shipping_carriers': input_dict['Shipping carriers'],
+        'Shipping_times': input_dict['Shipping times'],
+        'Order_quantities': input_dict['Order quantities']
     }
 
 @app.post("/predict/customer segmentation")
@@ -99,3 +99,4 @@ def predict_shipping_costs(data: LogisticsData):
     shipping_df=input_df[shipping_model.feature_names_in_]
     prediction=shipping_model.predict(shipping_df)
     return {"shipping_costs_prediction": prediction[0]}
+
