@@ -35,8 +35,10 @@ with st.form(key="customer_form"):
             'Revenue_generated': form_values2['Revenue generated'],
             'Availability': form_values2["Availability"] 
         }
-        url="https://logistics-2-ever.onrender.com/predict"
+        url="https://logistics-2-ever.onrender.com/predict/customer_segmentation"
+        response=requests.post(url,json=input_data)
+        st.write(response.json())
 
 
-response=requests.post(url,json=input_data)
-st.write(response)
+
+
