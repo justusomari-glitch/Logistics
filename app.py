@@ -18,24 +18,37 @@ print("shipping:",shipping_model.feature_names_in_)
 def home():
     return {"message": "We are live!"}
 
-class LogisticsData(BaseModel):
+class InspectionInput(BaseModel):
     Supplier_name: str
     Defect_rates: float
     Production_volumes: int
     Manufacturing_lead_time: int
     Manufacturing_costs: float
+
+class CustomerSegmentationInput(BaseModel):
     Price: float
     Availability: int
     Number_of_products_sold: int
     Revenue_generated: float
     Product_type: str
     Customer_demographics: str
-    customer_classification: str
+  
+
+class ShippingCostsInput(BaseModel):
     Transportation_modes: str
     Routes: str
     Shipping_carriers: str
     Shipping_times: int
     Order_quantities: int
+
+class RevenueInput(BaseModel):
+    Price: float
+    Availability: int
+    Number_of_products_sold: int
+    Product_type: str
+    Customer_demographics: str
+    customer_classification: str
+    
 
 def map_input(input_dict):
     return {
@@ -66,7 +79,7 @@ cluster_names={
 
 
 @app.post("/predict/customer_segmentation")
-def predict_customer_segmentation(data: LogisticsData):
+def predict_customer_segmentation(data: CustomerSegmentationInput):
     input_dict=data.model_dump()
     mapped_input=map_input(input_dict)
 
@@ -78,7 +91,7 @@ def predict_customer_segmentation(data: LogisticsData):
    
     
 @app.post("/predict/inspection")
-def predict_inspection(data: LogisticsData):
+def predict_inspection(data: InspectionInput):
     input_dict=data.model_dump()
     mapped_input=map_input(input_dict)
 
@@ -88,7 +101,7 @@ def predict_inspection(data: LogisticsData):
     return {"inspection_prediction": str(prediction[0])}
 
 @app.post("/predict/revenue")
-def predict_revenue(data: LogisticsData):
+def predict_revenue(data: RevenueInput):
     input_dict=data.model_dump()
     mapped_input=map_input(input_dict)
 
@@ -99,7 +112,7 @@ def predict_revenue(data: LogisticsData):
 
 
 @app.post("/predict/shipping costs")
-def predict_shipping_costs(data: LogisticsData):
+def predict_shipping_costs(data: ShippingCostsInput):
     input_dict=data.model_dump()
     mapped_input=map_input(input_dict)
 
