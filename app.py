@@ -66,7 +66,7 @@ def predict_customer_segmentation(data: LogisticsData):
     input_df=pd.DataFrame([mapped_input])
     customer_df=input_df[customer_model.feature_names_in_]
     prediction=customer_model.predict(customer_df)
-    return {"customer_segmentation": prediction[0]}
+    return {"customer_segmentation": str(prediction[0])}
    
     
 @app.post("/predict/inspection")
@@ -77,7 +77,7 @@ def predict_inspection(data: LogisticsData):
     input_df=pd.DataFrame([mapped_input])
     inspection_df=input_df[inspection_model.feature_names_in_]
     prediction=inspection_model.predict(inspection_df)
-    return {"inspection_prediction": prediction[0]}
+    return {"inspection_prediction": str(prediction[0])}
 
 @app.post("/predict/revenue")
 def predict_revenue(data: LogisticsData):
@@ -87,7 +87,7 @@ def predict_revenue(data: LogisticsData):
     input_df=pd.DataFrame([mapped_input])
     revenue_df=input_df[revenue_model.feature_names_in_]
     prediction=revenue_model.predict(revenue_df)
-    return {"revenue_prediction": prediction[0]}
+    return {"revenue_prediction": float(prediction[0])}
 
 
 @app.post("/predict/shipping costs")
@@ -98,5 +98,5 @@ def predict_shipping_costs(data: LogisticsData):
     input_df=pd.DataFrame([mapped_input])
     shipping_df=input_df[shipping_model.feature_names_in_]
     prediction=shipping_model.predict(shipping_df)
-    return {"shipping_costs_prediction": prediction[0]}
+    return {"shipping_costs_prediction": float(prediction[0])}
 
