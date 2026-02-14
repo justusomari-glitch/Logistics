@@ -50,26 +50,6 @@ class RevenueInput(BaseModel):
     customer_classification: str
     
 
-def map_input(input_dict):
-    return {
-        'Supplier name': input_dict['Supplier_name'],
-        'Defect rates': input_dict['Defect_rates'],
-        'Production volumes': input_dict['Production_volumes'],
-        'Manufacturing lead time': input_dict['Manufacturing_lead_time'],
-        'Manufacturing costs': input_dict['Manufacturing_costs'],
-        'Price': input_dict['Price'],
-        'Availability': input_dict['Availability'],
-        'Number of products sold': input_dict['Number_of_products_sold'],
-        'Revenue generated': input_dict['Revenue_generated'],
-        'Product type': input_dict['Product_type'],
-        'Customer demographics': input_dict['Customer_demographics'],
-        'customer classification': input_dict['customer_classification'],
-        'Transportation modes': input_dict['Transportation_modes'],
-        'Routes': input_dict['Routes'],
-        'Shipping carriers': input_dict['Shipping_carriers'],
-        'Shipping times': input_dict['Shipping_times'],
-        'Order quantities': input_dict['Order_quantities']
-    }
 cluster_names={
     0: 'Mid-tier customers',
     1: 'Highest-value customers',
@@ -80,6 +60,16 @@ cluster_names={
 
 @app.post("/predict/customer_segmentation")
 def predict_customer_segmentation(data: CustomerSegmentationInput):
+    def map_input(input_dict):
+        return {      
+            'Price': input_dict['Price'],
+            'Availability': input_dict['Availability'],
+            'Number of products sold': input_dict['Number_of_products_sold'],
+            'Revenue generated': input_dict['Revenue_generated'],
+            'Product type': input_dict['Product_type'],
+            'Customer demographics': input_dict['Customer_demographics'],
+        }
+        
     input_dict=data.model_dump()
     mapped_input=map_input(input_dict)
 
@@ -92,6 +82,14 @@ def predict_customer_segmentation(data: CustomerSegmentationInput):
     
 @app.post("/predict/inspection")
 def predict_inspection(data: InspectionInput):
+    def map_input(input_dict):
+        return {
+            'Supplier name': input_dict['Supplier_name'],
+            'Defect rates': input_dict['Defect_rates'],
+            'Production volumes': input_dict['Production_volumes'],
+            'Manufacturing lead time': input_dict['Manufacturing_lead_time'],
+            'Manufacturing costs': input_dict['Manufacturing_costs']
+        }
     input_dict=data.model_dump()
     mapped_input=map_input(input_dict)
 
@@ -102,6 +100,15 @@ def predict_inspection(data: InspectionInput):
 
 @app.post("/predict/revenue")
 def predict_revenue(data: RevenueInput):
+    def map_input(input_dict):
+        return {
+        'Price': input_dict['Price'],
+        'Availability': input_dict['Availability'],
+        'Number of products sold': input_dict['Number_of_products_sold'],
+        'Product type': input_dict['Product_type'],
+        'Customer demographics': input_dict['Customer_demographics'],
+        'customer classification': input_dict['customer_classification']
+    }
     input_dict=data.model_dump()
     mapped_input=map_input(input_dict)
 
@@ -113,6 +120,14 @@ def predict_revenue(data: RevenueInput):
 
 @app.post("/predict/shipping costs")
 def predict_shipping_costs(data: ShippingCostsInput):
+    def map_input(input_dict):
+        return {
+        'Transportation modes': input_dict['Transportation_modes'],
+        'Routes': input_dict['Routes'],
+        'Shipping carriers': input_dict['Shipping_carriers'],
+        'Shipping times': input_dict['Shipping_times'],
+        'Order quantities': input_dict['Order_quantities']
+        }
     input_dict=data.model_dump()
     mapped_input=map_input(input_dict)
 
