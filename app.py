@@ -37,10 +37,8 @@ class LogisticsData(BaseModel):
     Shipping_times: int
     Order_quantities: int
 
-@app.post("predict")
-def predict(data: LogisticsData):
-    input_dict= data.model_dump()
-    mapped_dict={
+def map_input(input_dict):
+    return {
         'Supplier_name': input_dict['Supplier_name'],
         'Defect_rates': input_dict['Defect_rates'],
         'Production_volumes': input_dict['Production_volumes'],
@@ -59,20 +57,45 @@ def predict(data: LogisticsData):
         'Shipping_times': input_dict['Shipping_times'],
         'Order_quantities': input_dict['Order_quantities']
     }
-    input_df=pd.DataFrame([mapped_dict])
 
-    inspection_df=input_df[inspection_model.feature_names_in_]
+@app.post("/predict/customer segmentation")
+def predict_customer_segmentation(data: LogisticsData):
+    input_dict=data.model_dump()
+    mapped_input=map_input(input_dict)
+
+    input_df=pd.DataFrame([mapped_input])
     customer_df=input_df[customer_model.feature_names_in_]
-    revenue_df=input_df[revenue_model.feature_names_in_]
-    shipping_df=input_df[shipping_model.feature_names_in_]
+    prediction=customer_model.predict(customer_df)
+    return {"customer_segmentation": prediction[0]}
+   
     
-    inspection_prediction=inspection_model.predict(inspection_df)
-    customer_prediction=customer_model.predict(customer_df)
-    revenue_prediction=revenue_model.predict(revenue_df)
-    shipping_prediction=shipping_model.predict(shipping_df)
-    return {
-        "inspection_prediction": inspection_prediction[0],
-        "customer_prediction": customer_prediction[0],
-        "revenue_prediction": revenue_prediction[0],
-        "shipping_prediction": shipping_prediction[0]
-    }
+@app.post("/predict/inspection")
+def predict_inspection(data: LogisticsData):
+    input_dict=data.model_dump()
+    mapped_input=map_input(input_dict)
+
+    input_df=pd.DataFrame([mapped_input])
+    inspection_df=input_df[inspection_model.feature_names_in_]
+    prediction=inspection_model.predict(inspection_df)
+    return {"inspection_prediction": prediction[0]}
+
+@app.post("/predict/revenue")
+def predict_revenue(data: LogisticsData):
+    input_dict=data.model_dump()
+    mapped_input=map_input(input_dict)
+
+    input_df=pd.DataFrame([mapped_input])
+    revenue_df=input_df[revenue_model.feature_names_in_]
+    prediction=revenue_model.predict(revenue_df)
+    return {"revenue_prediction": prediction[0]}
+
+
+@app.post("/predict/shipping costs")
+def predict_shipping_costs(data: LogisticsData):
+    input_dict=data.model_dump()
+    mapped_input=map_input(input_dict)
+
+    input_df=pd.DataFrame([mapped_input])
+    shipping_df=input_df[shipping_model.feature_names_in_]
+    prediction=shipping_model.predict(shipping_df)
+    return {"shipping_costs_prediction": prediction[0]}
