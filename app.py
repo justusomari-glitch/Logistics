@@ -46,7 +46,7 @@ def map_input(input_dict):
         'Manufacturing costs': input_dict['Manufacturing_costs'],
         'Price': input_dict['Price'],
         'Availability': input_dict['Availability'],
-        'Number of products_sold': input_dict['Number_of_products_sold'],
+        'Number of products sold': input_dict['Number_of_products_sold'],
         'Revenue generated': input_dict['Revenue_generated'],
         'Product type': input_dict['Product_type'],
         'Customer demographics': input_dict['Customer_demographics'],
