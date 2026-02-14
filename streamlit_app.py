@@ -29,11 +29,11 @@ with st.form(key="customer_form"):
     if None in form_values2.values():
         st.warning("Please fill in all the fields.")
     else:input_data={
-        'Customer_demographics': form_values2['Customer demographics'],
-        'Product_type': form_values2['Product type'],
+        'Customer demographics': form_values2['Customer demographics'],
+        'Product type': form_values2['Product type'],
         'Price': form_values2['Price'],
-        'Number_of_products_sold': form_values2['Number of products sold'],
-        'Revenue_generated': form_values2['Revenue generated'],
+        'Number of products sold': form_values2['Number of products sold'],
+        'Revenue generated': form_values2['Revenue generated'],
         "Availability": form_values2["Availability"]
     }
 url="https://logistics-1-vuxd.onrender.com/predict/customer_segmentation"
