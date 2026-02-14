@@ -57,8 +57,15 @@ def map_input(input_dict):
         'Shipping times': input_dict['Shipping_times'],
         'Order quantities': input_dict['Order_quantities']
     }
+cluster_names={
+    0: 'Mid-tier customers',
+    1: 'Highest-value customers',
+    2: 'High-value customers',
+    3: 'Low-value customers'
+}
 
-@app.post("/predict/customer segmentation")
+
+@app.post("/predict/customer_segmentation")
 def predict_customer_segmentation(data: LogisticsData):
     input_dict=data.model_dump()
     mapped_input=map_input(input_dict)
@@ -66,7 +73,8 @@ def predict_customer_segmentation(data: LogisticsData):
     input_df=pd.DataFrame([mapped_input])
     customer_df=input_df[customer_model.feature_names_in_]
     prediction=customer_model.predict(customer_df)
-    return {"customer_segmentation": str(prediction[0])}
+    cluster_number=int(prediction[0])
+    return {"customer_segmentation": cluster_names[cluster_number]}
    
     
 @app.post("/predict/inspection")
