@@ -107,7 +107,7 @@ def predict_revenue(data: RevenueInput):
         'Number of products sold': input_dict['Number_of_products_sold'],
         'Product type': input_dict['Product_type'],
         'Customer demographics': input_dict['Customer_demographics'],
-        'customer classification': input_dict['customer_classification']
+        'customer_classification': input_dict['customer_classification']
     }
     input_dict=data.model_dump()
     mapped_input=map_input(input_dict)
