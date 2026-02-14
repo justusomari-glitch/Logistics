@@ -111,7 +111,7 @@ elif prediction_type=="Inspection Prediction":
             form_values4["Manufacturing costs"]=st.number_input("Please enter Manufacturing Costs:",min_value=1)
             submit_button=st.form_submit_button(label="inspection Prediction")
             if submit_button:
-                input_data={
+                input_data={ 
                     "Supplier_name": form_values4["Supplier name"],
                     "Defect_rates": form_values4["Defect rates"],
                     "Production_volumes": form_values4["Production volumes"],
@@ -150,6 +150,6 @@ elif prediction_type=="Shipping Costs Prediction":
                     "Shipping_times": form_values5["Shipping times"],
                     "Order_quantities": form_values5["Order quantities"]
                 }
-                url="https://logistics-1vg4.onrender.com/predict/shipping_costs"
+                url="https://logistics-1vg4.onrender.com/predict/shipping costs"
                 response=requests.post(url,json=input_data)
                 st.write(response.json())
