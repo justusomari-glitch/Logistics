@@ -1,8 +1,10 @@
 import streamlit as st
 import requests
 st.sidebar.title("LOGISTICS ANALYSIS")
+st.sidebar.markdown("Welcome to the Logistics Analysis App! This application provides insights and predictions related to various aspects of logistics, including revenue prediction, customer segmentation, inspection prediction, and shipping costs prediction. Please select a prediction type to get started.")   
 prediction_type=st.sidebar.selectbox("Select Prediction Type:",["Revenue Prediction","Customer Segmentation","Inspection Prediction","Shipping Costs Prediction"])
-
+st.markdown("## Please fill in the required information to get the prediction results.")
+st.sidebar.caption("Built By Omari Kwache Justus Junior")
 if prediction_type=="Customer Segmentation":
     st.header("CUSTOMER SEGMENTATION")
 elif prediction_type=="Inspection Prediction":
@@ -57,7 +59,11 @@ if prediction_type=="Customer Segmentation":
             }
             url="https://logistics-1vg4.onrender.com/predict/customer_segmentation"
             response=requests.post(url,json=input_data)
-            st.write(response.json())
+            customer_segmentation=response.json()
+            prediction=customer_segmentation.get("customer_segmentation")
+            st.write(f"### Customer Group: {prediction}")
+
+
 elif prediction_type=="Revenue Prediction":
       Customer_demographics=['Female','Male','Non-binary','Unknown']
       Product_type=['cosmetics','haircare','skincare']
@@ -91,7 +97,9 @@ elif prediction_type=="Revenue Prediction":
                 }
                 url="https://logistics-1vg4.onrender.com/predict/revenue"
                 response=requests.post(url,json=input_data)
-                st.write(response.json())
+                Revenue=response.json()
+                prediction=Revenue.get("revenue_prediction")
+                st.write(f"#### Predicted Revenue: {prediction}")
 
 
 elif prediction_type=="Inspection Prediction":
@@ -120,7 +128,10 @@ elif prediction_type=="Inspection Prediction":
                 }
                 url="https://logistics-1vg4.onrender.com/predict/inspection"
                 response=requests.post(url,json=input_data)
-                st.write(response.json())
+                inspection_prediction=response.json()
+                prediction=inspection_prediction.get("inspection_prediction")
+                st.write(f"### Inspection Outcome: {prediction}")
+
 
 elif prediction_type=="Shipping Costs Prediction":
       Transportation_mode=['Air','Sea','Rail','Road']
@@ -152,4 +163,6 @@ elif prediction_type=="Shipping Costs Prediction":
                 }
                 url="https://logistics-1vg4.onrender.com/predict/shipping costs"
                 response=requests.post(url,json=input_data)
-                st.write(response.json())
+                Shipping_costs=response.json()
+                prediction=Shipping_costs.get("shipping_costs_prediction")
+                st.write(f"### Shipping Costs: {prediction}")
