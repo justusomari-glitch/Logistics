@@ -55,13 +55,13 @@ if prediction_type=="Customer Segmentation":
                 'Revenue_generated': form_values2['Revenue generated'],
                 'Availability': form_values2["Availability"] 
             }
-            url="https://logistics-2-ever.onrender.com/predict/customer_segmentation"
+            url="https://logistics-1vg4.onrender.com/predict/customer_segmentation"
             response=requests.post(url,json=input_data)
             st.write(response.json())
 elif prediction_type=="Revenue Prediction":
       Customer_demographics=['Female','Male','Non-binary','Unknown']
       Product_type=['cosmetics','haircare','skincare']
-      customer_classification=['Mid-tier customers','Highest-value customers','High-value customers','Low-value customers']
+      customer_classification=['Mid-tier Customer','Highest Value Customer','High Value Customer','Low Value Customer']
       form_values3={
         'Customer demographics':None,
         'Product type':None,
@@ -89,12 +89,67 @@ elif prediction_type=="Revenue Prediction":
                     'Availability': form_values3["Availability"],
                     'customer_classification': form_values3['customer_classification']
                 }
-                url="https://logistics-2-ever.onrender.com/predict/revenue"
+                url="https://logistics-1vg4.onrender.com/predict/revenue"
                 response=requests.post(url,json=input_data)
                 st.write(response.json())
-           
 
 
-     
-      
-                 
+elif prediction_type=="Inspection Prediction":
+      Supplier_name=['Supplier 1','Supplier 2','Supplier 3','Supplier 4','Supplier 5']
+      form_values4={
+            "Supplier name":None,
+            "Defect rates":None,
+            "Production volumes":None,
+            "Manufacturing lead time":None,
+            "Manufacturing costs":None
+      }
+      with st.form(key="inspection_form"):
+            form_values4["Supplier name"]=st.selectbox("Select Supplier Name:", Supplier_name)
+            form_values4["Defect rates"]=st.number_input("Enter Defect Rates:",min_value=2.0)
+            form_values4["Production volumes"]=st.number_input("Please enter production Volumes:",min_value=1)
+            form_values4["Manufacturing lead time"]=st.number_input("Please enter Manufacturing Lead Time:",min_value=1)
+            form_values4["Manufacturing costs"]=st.number_input("Please enter Manufacturing Costs:",min_value=1)
+            submit_button=st.form_submit_button(label="inspection Prediction")
+            if submit_button:
+                input_data={
+                    "Supplier_name": form_values4["Supplier name"],
+                    "Defect_rates": form_values4["Defect rates"],
+                    "Production_volumes": form_values4["Production volumes"],
+                    "Manufacturing_lead_time": form_values4["Manufacturing lead time"],
+                    "Manufacturing_costs": form_values4["Manufacturing costs"]
+                }
+                url="https://logistics-1vg4.onrender.com/predict/inspection"
+                response=requests.post(url,json=input_data)
+                st.write(response.json())
+
+elif prediction_type=="Shipping Costs Prediction":
+      Transportation_mode=['Air','Sea','Rail','Road']
+      Routes=['Route A','Route B','Route C']
+      Shipping_carriers=['Carrier A','Carrier B','Carrier C']
+
+      form_values5={
+            "Transportation modes":None,
+            "Routes":None,
+            "Shipping carriers":None,
+            "Shipping times":None,
+            "Order quantities":None
+      }
+       
+      with st.form(key="shipping_costs_form"):
+           form_values5['Transportation modes']=st.selectbox('Pick Transporttion Mode:',Transportation_mode)
+           form_values5['Routes']=st.selectbox("Pick Routes:",Routes)
+           form_values5['Shipping carriers']=st.selectbox("Pick Shipping Carriers:",Shipping_carriers)
+           form_values5['Shipping times']=st.number_input("Enter Shipping Times:",min_value=1)
+           form_values5['Order quantities']=st.number_input("Enter Order Quantities:",min_value=1)
+           submit_button=st.form_submit_button(label="Shipping Costs Prediction")
+           if submit_button:
+                input_data={
+                    "Transportation_modes": form_values5["Transportation modes"],
+                    "Routes": form_values5["Routes"],
+                    "Shipping_carriers": form_values5["Shipping carriers"],
+                    "Shipping_times": form_values5["Shipping times"],
+                    "Order_quantities": form_values5["Order quantities"]
+                }
+                url="https://logistics-1vg4.onrender.com/predict/shipping_costs"
+                response=requests.post(url,json=input_data)
+                st.write(response.json())
